@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>FreshGPU - Limpieza de caché para gráfica</title>
+    <link rel="stylesheet" href="css/bulma/css/bulma.min.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+
+  <body>
+    <section class="section">
+      <div class="container">
+        <!-- Título principal -->
+        <h1 class="title">FreshGPU</h1>
+        <h2 class="subtitle">Limpieza de caché para gráfica</h2>
+
+        <!-- Card con selector y botón -->
+        <p class="mt-4">Seleccione el fabricante:</p>
+        <div class="card">
+          <div class="card-content">
+            <div class="field is-grouped is-flex is-justify-content-center">
+              <div class="control">
+                <div class="select" id="gpuSelectWrapper">
+                  <select id="gpuSelect">
+                    <option value="">Seleccione...</option>
+                    <option value="nvidia">NVIDIA</option>
+                    <option value="amd">AMD</option>
+                    <option value="intel">Intel</option>
+                  </select>
+                </div>
+              </div>
+              <div class="control">
+                <button id="deleteCacheButton" class="button is-light" disabled>Borrar Caché</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Rutas de Limpieza -->
+        <p class="mt-4">Rutas de Limpieza:</p>
+        <div class="card fixed-card">
+          <div class="card-content">
+            <div id="gpuPaths">
+              <ul></ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Estado del proceso -->
+        <p class="mt-4">Información de proceso:</p>
+        <div class="card fixed-card">
+          <div class="card-content-proceso">
+            <div id="proceso">
+              <ul></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Modal de confirmación -->
+    <div class="modal" id="confirmModal">
+      <div class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Advertencia</p>
+          <button class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+          <p>
+            Esta acción eliminará permanentemente la caché de la gráfica seleccionada. ¿Estás seguro de que deseas
+            continuar?
+          </p>
+        </section>
+        <footer class="modal-card-foot">
+          <button id="confirmDeleteButton" class="button is-danger">Sí, estoy seguro</button>
+          <button class="button cancelButton">Cancelar</button>
+        </footer>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer is-custom-footer">
+      <div class="content has-text-centered">
+        Hecho con NeutralinoJs, &copy;
+        <span id="miFirma">Daniel Bautista Pradilla.</span>
+      </div>
+    </footer>
+
+    <!-- Neutralino.js client. This file is gitignored, 
+        because `neu update` typically downloads it.
+        Avoid copy-pasting it. 
+        -->
+    <script src="/js/neutralino.js"></script>
+    <!-- JS principal -->
+    <script src="/js/main.js"></script>
+  </body>
+</html>

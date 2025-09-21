@@ -1,0 +1,71 @@
+@font-face {
+  font-family: "AlexBrush";
+  src: url("../fonts/AlexBrush/AlexBrush-Regular.ttf") format("truetype");
+}
+
+/* Firma */
+#miFirma {
+  font-family: "AlexBrush", cursive;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 26px;
+  margin-left: 9px;
+}
+
+/* Ajustar el card del textarea */
+.fixed-card {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.fixed-card .card-content-proceso {
+  height: 180px; /* Mantiene el tamaño fijo */
+  overflow-y: auto; /* Permite el desplazamiento vertical */
+  white-space: pre-line;
+  margin-left: 1rem;
+}
+
+/* Ajustar el padding dentro de .card-content para reducir el espacio */
+.card .card-content {
+  padding: 1rem; /* Espacio más amplio dentro del contenido */
+}
+
+/* Ajustar el alto del footer */
+footer.footer {
+  padding: 1rem; /* Ajusta el espacio interno del footer */
+  height: auto; /* Altura automática basada en el contenido */
+  display: flex;
+  align-items: center; /* Alinea el contenido verticalmente */
+  justify-content: center; /* Centra el contenido horizontalmente */
+  position: fixed; /* Posición fija */
+  bottom: 0; /* Pegado al fondo */
+  width: 100%; /* Asegura que ocupe todo el ancho */
+}
+
+/* Oculta la barra de scroll vertical */
+html,
+body {
+  overflow-y: hidden;
+  height: 100%; /* Asegura que el contenido llene toda la ventana */
+  margin: 0; /* Elimina márgenes para evitar desplazamiento */
+}
+
+/* Ajuste moderado en la sección que contiene los cards class="section" */
+.section {
+  padding-top: 0; /* Elimina el espacio superior de la sección */
+  padding-bottom: 1rem; /* Espacio inferior adecuado */
+  margin-top: 1.5rem; /* Mantiene el margen superior de la sección */
+}
+
+/* Ajustes al modal */
+.modal-card {
+  max-width: 400px; /* Ajusta el ancho del modal */
+}
+
+.modal-card-foot .button {
+  margin-right: 10px; /* Añade espacio entre los botones */
+}
+
+.modal-card-foot .button:last-child {
+  margin-right: 0; /* Elimina el margen derecho del último botón */
+}
