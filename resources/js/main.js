@@ -1,8 +1,3 @@
-// This is just a sample app. You can structure your Neutralinojs app code as you wish.
-// This example app is written with vanilla JavaScript and HTML.
-// Feel free to use any frontend framework you like :)
-// See more details: https://neutralino.js.org/docs/how-to/use-a-frontend-library
-
 /*
     Function to set up a system tray menu with options specific to the window mode.
     This function checks if the application is running in window mode, and if so,
@@ -31,27 +26,23 @@ function setTray() {
 
 /*
     Function to handle click events on the tray menu items.
-    This function performs different actions based on the clicked item's ID,
-    such as displaying version information or exiting the application.
 */
 function onTrayMenuItemClicked(event) {
   switch (event.detail.id) {
     case "VERSION":
-      // Display version information
       Neutralino.os.showMessageBox(
         "Version information",
         `Neutralinojs server: v${NL_VERSION} | Neutralinojs client: v${NL_CVERSION}`
       );
       break;
     case "QUIT":
-      // Exit the application
       Neutralino.app.exit();
       break;
   }
 }
 
 /*
-    Function to handle the window close event by gracefully exiting the Neutralino application.
+    Function to handle the window close event.
 */
 function onWindowClose() {
   Neutralino.app.exit();
@@ -66,32 +57,111 @@ Neutralino.events.on("windowClose", onWindowClose);
 
 // Conditional initialization: Set up system tray if not running on macOS
 if (NL_OS != "Darwin") {
-  // TODO: Fix https://github.com/neutralinojs/neutralinojs/issues/615
   setTray();
 }
 
-// Cambio de color, boton de borrado
+// -----------------------------
+// Interfaz y lógica del proyecto
+// -----------------------------
 const gpuSelect = document.getElementById("gpuSelect");
 const deleteButton = document.getElementById("deleteCacheButton");
 const gpuSelectWrapper = document.getElementById("gpuSelectWrapper");
+const gpuPathsList = document.querySelector("#gpuPaths ul");
+const procesoList = document.querySelector("#proceso ul");
 
-gpuSelect.addEventListener("change", () => {
-  // Reset
+// Modal
+const confirmModal = document.getElementById("confirmModal");
+const confirmDeleteButton = document.getElementById("confirmDeleteButton");
+const cancelButtons = document.querySelectorAll(".cancelButton, .delete");
+
+// Estado
+let currentVendor = null;
+let currentModule = null;
+
+// Cargar módulo dinámicamente
+async function loadVendorModule(vendor) {
+  try {
+    const homeDir = await Neutralino.os.getEnv("USERPROFILE");
+
+    const module = await import(`../modules/${vendor}.js`);
+    const paths = module.default(homeDir);
+
+    currentVendor = vendor;
+    currentModule = module;
+    currentModule.paths = paths;
+
+    showPaths(paths);
+  } catch (err) {
+    console.error(`Error cargando módulo de ${vendor}:`, err);
+  }
+}
+
+// Mostrar rutas
+function showPaths(paths) {
+  gpuPathsList.innerHTML = "";
+  procesoList.innerHTML = "";
+  paths.forEach((path) => {
+    const li = document.createElement("li");
+    li.textContent = path;
+    gpuPathsList.appendChild(li);
+  });
+}
+
+// Abrir modal
+function openModal() {
+  confirmModal.classList.add("is-active");
+}
+
+// Cerrar modal
+function closeModal() {
+  confirmModal.classList.remove("is-active");
+}
+
+// Ejecutar borrado usando el módulo cargado
+async function deleteCache() {
+  if (!currentModule || !currentModule.paths) return;
+
+  procesoList.innerHTML = "";
+
+  for (const path of currentModule.paths) {
+    const li = document.createElement("li");
+    li.textContent = `Eliminando archivos en: ${path}`;
+    procesoList.appendChild(li);
+
+    try {
+      await currentModule.cleanPath(path);
+      const li2 = document.createElement("li");
+      li2.textContent = `Completado: ${path}`;
+      procesoList.appendChild(li2);
+    } catch (err) {
+      const liErr = document.createElement("li");
+      liErr.textContent = `Error al eliminar: ${path}`;
+      procesoList.appendChild(liErr);
+    }
+  }
+}
+
+// Eventos
+gpuSelect.addEventListener("change", async () => {
   deleteButton.className = "button";
   gpuSelectWrapper.className = "select";
   deleteButton.disabled = false;
 
+  if (gpuSelect.value) {
+    await loadVendorModule(gpuSelect.value);
+  }
+
   switch (gpuSelect.value) {
     case "nvidia":
-      deleteButton.classList.add("is-success"); // verde
+      deleteButton.classList.add("is-success");
       gpuSelectWrapper.classList.add("is-success");
       break;
     case "amd":
-      deleteButton.classList.add("is-danger"); // rojo
+      deleteButton.classList.add("is-danger");
       gpuSelectWrapper.classList.add("is-danger");
       break;
     case "intel":
-      deleteButton.classList.add("is-link"); // azul
+      deleteButton.classList.add("is-link");
       gpuSelectWrapper.classList.add("is-link");
       break;
     default:
@@ -100,3 +170,19 @@ gpuSelect.addEventListener("change", () => {
       deleteButton.disabled = true;
   }
 });
+
+// Botón borrar abre modal
+deleteButton.addEventListener("click", () => {
+  if (!deleteButton.disabled && currentVendor) {
+    openModal();
+  }
+});
+
+// Confirmar borrado
+confirmDeleteButton.addEventListener("click", async () => {
+  closeModal();
+  await deleteCache();
+});
+
+// Cancelar modal
+cancelButtons.forEach((btn) => btn.addEventListener("click", closeModal));

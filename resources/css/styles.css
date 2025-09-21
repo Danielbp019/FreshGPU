@@ -48,6 +48,7 @@ body {
   overflow-y: hidden;
   height: 100%; /* Asegura que el contenido llene toda la ventana */
   margin: 0; /* Elimina márgenes para evitar desplazamiento */
+  padding-bottom: 3rem;
 }
 
 /* Ajuste moderado en la sección que contiene los cards class="section" */
