@@ -1,64 +1,4 @@
-/*
-    Function to set up a system tray menu with options specific to the window mode.
-    This function checks if the application is running in window mode, and if so,
-    it defines the tray menu items and sets up the tray accordingly.
-*/
-function setTray() {
-  // Tray menu is only available in window mode
-  if (NL_MODE != "window") {
-    console.log("INFO: Tray menu is only available in the window mode.");
-    return;
-  }
-
-  // Define tray menu items
-  let tray = {
-    icon: "/resources/icons/trayIcon.png",
-    menuItems: [
-      { id: "VERSION", text: "Get version" },
-      { id: "SEP", text: "-" },
-      { id: "QUIT", text: "Quit" },
-    ],
-  };
-
-  // Set the tray menu
-  Neutralino.os.setTray(tray);
-}
-
-/*
-    Function to handle click events on the tray menu items.
-*/
-function onTrayMenuItemClicked(event) {
-  switch (event.detail.id) {
-    case "VERSION":
-      Neutralino.os.showMessageBox(
-        "Version information",
-        `Neutralinojs server: v${NL_VERSION} | Neutralinojs client: v${NL_CVERSION}`
-      );
-      break;
-    case "QUIT":
-      Neutralino.app.exit();
-      break;
-  }
-}
-
-/*
-    Function to handle the window close event.
-*/
-function onWindowClose() {
-  Neutralino.app.exit();
-}
-
-// Initialize Neutralino
-Neutralino.init();
-
-// Register event listeners
-Neutralino.events.on("trayMenuItemClicked", onTrayMenuItemClicked);
-Neutralino.events.on("windowClose", onWindowClose);
-
-// Conditional initialization: Set up system tray if not running on macOS
-if (NL_OS != "Darwin") {
-  setTray();
-}
+// resources/js/main.js
 
 // -----------------------------
 // Interfaz y lógica del proyecto
@@ -87,8 +27,7 @@ async function loadVendorModule(vendor) {
     const paths = module.default(homeDir);
 
     currentVendor = vendor;
-    currentModule = module;
-    currentModule.paths = paths;
+    currentModule = { paths };
 
     showPaths(paths);
   } catch (err) {
@@ -117,31 +56,22 @@ function closeModal() {
   confirmModal.classList.remove("is-active");
 }
 
-// Ejecutar borrado usando el módulo cargado
+// Ejecutar borrado usando shared.js
 async function deleteCache() {
   if (!currentModule || !currentModule.paths) return;
 
   procesoList.innerHTML = "";
 
-  for (const path of currentModule.paths) {
-    const li = document.createElement("li");
-    li.textContent = `Eliminando archivos en: ${path}`;
-    procesoList.appendChild(li);
+  const logs = await window.clearCache(currentModule.paths);
 
-    try {
-      await currentModule.cleanPath(path);
-      const li2 = document.createElement("li");
-      li2.textContent = `Completado: ${path}`;
-      procesoList.appendChild(li2);
-    } catch (err) {
-      const liErr = document.createElement("li");
-      liErr.textContent = `Error al eliminar: ${path}`;
-      procesoList.appendChild(liErr);
-    }
-  }
+  logs.forEach((msg) => {
+    const li = document.createElement("li");
+    li.textContent = msg;
+    procesoList.appendChild(li);
+  });
 }
 
-// Eventos
+// Eventos cambio de color de boton
 gpuSelect.addEventListener("change", async () => {
   deleteButton.className = "button";
   gpuSelectWrapper.className = "select";
@@ -186,3 +116,6 @@ confirmDeleteButton.addEventListener("click", async () => {
 
 // Cancelar modal
 cancelButtons.forEach((btn) => btn.addEventListener("click", closeModal));
+
+// Inicializar Neutralino
+Neutralino.init();

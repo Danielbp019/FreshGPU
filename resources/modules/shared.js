@@ -1,14 +1,14 @@
+// resources/js/shared.js
+
 // Lógica genérica de borrado que usan todos los fabricantes
 async function deleteFolderContents(folderPath) {
   let logs = [];
 
   try {
     const items = await Neutralino.filesystem.readDirectory(folderPath);
-
     for (const item of items) {
       if (item.entry === "." || item.entry === "..") continue;
       const itemPath = `${folderPath}\\${item.entry}`;
-
       try {
         if (item.type === "DIRECTORY") {
           logs = logs.concat(await deleteFolderContents(itemPath));
@@ -45,4 +45,5 @@ async function clearCache(cachePaths) {
   return logs;
 }
 
-export { clearCache };
+// Hacer disponible globalmente
+window.clearCache = clearCache;

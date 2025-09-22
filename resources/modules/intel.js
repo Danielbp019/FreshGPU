@@ -4,15 +4,6 @@ export default function getPaths(homeDir) {
     `${homeDir}\\AppData\\Local\\Intel\\DXCache`,
     `${homeDir}\\AppData\\Local\\Intel\\GLCache`,
     `${homeDir}\\AppData\\Local\\Intel\\ShaderCache`,
+    `${homeDir}\\AppData\\Local\\Intel\\GPUCache`,
   ];
-}
-
-export async function cleanPath(path) {
-  try {
-    await Neutralino.filesystem.removeDirectory(path, { recursive: true });
-    await Neutralino.filesystem.createDirectory(path);
-  } catch (err) {
-    console.error(`Error borrando ${path}:`, err);
-    throw err;
-  }
 }
