@@ -21,8 +21,10 @@
 .fixed-card .card-content-proceso {
   height: 180px; /* Mantiene el tamaño fijo */
   overflow-y: auto; /* Permite el desplazamiento vertical */
-  white-space: pre-line;
+  overflow-x: hidden; /* bloquea scroll horizontal */
+  word-wrap: break-word; /* parte palabras largas si se salen */
   margin-left: 1rem;
+  white-space: normal; /* evita saltos extra */
 }
 
 /* Ajustar el padding dentro de .card-content para reducir el espacio */
@@ -69,4 +71,16 @@ body {
 
 .modal-card-foot .button:last-child {
   margin-right: 0; /* Elimina el margen derecho del último botón */
+}
+
+#proceso ul {
+  margin: 0;
+  padding-left: 1rem; /* o 0 si no quieres sangría */
+}
+
+#proceso li {
+  margin: 0;
+  padding: 0.2rem 0; /* controlas el espaciado entre líneas */
+  list-style: none; /* quita viñetas si no las quieres */
+  white-space: normal; /* permite salto de línea automático */
 }

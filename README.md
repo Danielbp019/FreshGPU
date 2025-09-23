@@ -1,22 +1,40 @@
 ## FreshGPU
 
-Limpiar las carpetas de caché de controladores gráficos de diferentes rutas dependiendo del fabricante y muestra las rutas a donde el programa apunta.
+Limpiar las carpetas de caché de controladores gráficos de diferentes rutas, dependiendo del fabricante y muestra las rutas a donde el programa apunta.
 
-## Running your application:
+## 🚀 Características.
+
+- Limpieza de caché de controladores NVIDIA, AMD e Intel.
+
+- Interfaz ligera con Bulma CSS.
+
+- Compatible con Windows.
+
+- Interfaz construida con Neutralino.js.
+
+## 📋 Requisitos previos para desarrollo.
+
+- Neutralinojs instalado globalmente.
+
+```sh
+npm install -g @neutralinojs/neu
+```
+
+- Node.js (opcional, para desarrollo).
+
+## Ejecutando su aplicación:
 
 ```sh
 neu run
-
 ```
 
-## Building your application:
+## Construyendo la aplicación:
 
 ```sh
 neu build --release
-
 ```
 
-Árbol:
+## Árbol:
 
 ```sh
 FreshGPU/
@@ -38,5 +56,4 @@ FreshGPU/
 │   │   ├── nvidia.js
 │   │   └── shared.js
 │   └── index.html
-
 ```

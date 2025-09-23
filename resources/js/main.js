@@ -1,8 +1,5 @@
 // resources/js/main.js
 
-// -----------------------------
-// Interfaz y lógica del proyecto
-// -----------------------------
 const gpuSelect = document.getElementById("gpuSelect");
 const deleteButton = document.getElementById("deleteCacheButton");
 const gpuSelectWrapper = document.getElementById("gpuSelectWrapper");
@@ -69,6 +66,9 @@ async function deleteCache() {
     li.textContent = msg;
     procesoList.appendChild(li);
   });
+
+  // Hacer scroll automático al final
+  scrollProcesoBottom();
 }
 
 // Eventos cambio de color de boton
@@ -105,6 +105,12 @@ gpuSelect.addEventListener("change", async () => {
       currentModule = null;
   }
 });
+
+// Función para hacer scroll automático
+function scrollProcesoBottom() {
+  const proceso = document.querySelector(".card-content-proceso");
+  proceso.scrollTop = proceso.scrollHeight;
+}
 
 // Botón borrar abre modal
 deleteButton.addEventListener("click", () => {
