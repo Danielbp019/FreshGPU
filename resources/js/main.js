@@ -98,6 +98,11 @@ gpuSelect.addEventListener("change", async () => {
       deleteButton.classList.add("is-light");
       gpuSelectWrapper.classList.add("is-light");
       deleteButton.disabled = true;
+      // Limpiar rutas y procesos cuando se vuelve a "Seleccione..."
+      gpuPathsList.innerHTML = "";
+      procesoList.innerHTML = "";
+      currentVendor = null;
+      currentModule = null;
   }
 });
 
