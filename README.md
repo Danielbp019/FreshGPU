@@ -22,6 +22,12 @@ npm install -g @neutralinojs/neu
 
 - Node.js (opcional, para desarrollo).
 
+## Actualizar para descargar el core del programa
+
+```sh
+neu update
+```
+
 ## Ejecutando su aplicación:
 
 ```sh
@@ -31,7 +37,7 @@ neu run
 ## Construyendo la aplicación:
 
 ```sh
-neu build --release
+neu build --release --clean
 ```
 
 ## Árbol:
