@@ -1,6 +1,6 @@
 ## FreshGPU
 
-Limpiar las carpetas de caché de controladores gráficos de diferentes rutas, dependiendo del fabricante y muestra las rutas a donde el programa apunta.
+Es un programa portable para limpiar las carpetas de caché de controladores gráficos de diferentes rutas, dependiendo del fabricante y muestra las rutas a donde el programa apunta.
 
 ## 🚀 Características.
 
@@ -11,6 +11,22 @@ Limpiar las carpetas de caché de controladores gráficos de diferentes rutas, d
 - Compatible con Windows.
 
 - Interfaz construida con Neutralino.js.
+
+## Imágenes del proyecto
+
+- **Vista general:**
+  ![general](ImgReadme/neuDefault.png)
+
+- **Vista Nvidia:**
+  ![Nvidia](ImgReadme/neuNvidia.png)
+
+- **Vista AMD:**
+  ![AMD](ImgReadme/neuAMD.png)
+
+- **Vista Intel:**
+  ![Intel](ImgReadme/neuIntel.png)
+
+  <br>
 
 ## 📋 Requisitos previos para desarrollo.
 

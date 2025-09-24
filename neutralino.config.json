@@ -25,7 +25,7 @@
       "resizable": false,
       "fullScreen": false,
       "alwaysOnTop": false,
-      "icon": "/resources/favicon.ico",
+      "icon": "/resources/icons/appIcon.png",
       "enableInspector": false,
       "borderless": false,
       "maximize": false,
